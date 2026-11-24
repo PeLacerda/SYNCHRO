@@ -6,6 +6,7 @@ import { Button, Card, ErrorText, Field, Muted, Title } from './ui';
 import { colors } from './theme';
 
 const fmt = (iso) => (iso ? new Date(iso).toLocaleDateString('pt-BR') : '');
+const fieldStyle = { fontSize: 22, height: 72, paddingHorizontal: 18, paddingVertical: 18 };
 // converte "dd/mm/aaaa" em ISO; aceita também aaaa-mm-dd
 function toIso(txt) {
   const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(txt.trim());
@@ -53,11 +54,11 @@ export default function ItemsTab({ spaceId, kind, title, dateField, dateLabel, h
         </Card>
       ))}
       <Title>Adicionar</Title>
-      <Field placeholder="Título" value={form.title} onChangeText={set('title')} />
-      {dateField && <Field placeholder={`${dateLabel} (dd/mm/aaaa)`} value={form.date} onChangeText={set('date')} />}
-      {hasLocation && <Field placeholder="Local (opcional)" value={form.location} onChangeText={set('location')} />}
-      <Field placeholder="Categoria (ex.: Viagem, Comida)" value={form.category} onChangeText={set('category')} />
-      <Field placeholder="Descrição (opcional)" value={form.description} onChangeText={set('description')} multiline />
+      <Field placeholder="Título" value={form.title} onChangeText={set('title')} style={fieldStyle} />
+      {dateField && <Field placeholder={`${dateLabel} (dd/mm/aaaa)`} value={form.date} onChangeText={set('date')} style={fieldStyle} />}
+      {hasLocation && <Field placeholder="Local (opcional)" value={form.location} onChangeText={set('location')} style={fieldStyle} />}
+      <Field placeholder="Categoria (ex.: Viagem, Comida)" value={form.category} onChangeText={set('category')} style={fieldStyle} />
+      <Field placeholder="Descrição (opcional)" value={form.description} onChangeText={set('description')} multiline style={[fieldStyle, { height: 180, textAlignVertical: 'top' }]} />
       <Button title="Salvar" onPress={create} />
     </ScrollView>
   );

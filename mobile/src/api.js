@@ -9,6 +9,7 @@ function baseUrl() {
   return `http://${host}:3333/api`;
 }
 export const API_URL = baseUrl();
+const REQUEST_TIMEOUT_MS = 15000;
 
 let token = null;
 export const setToken = async (t) => {
@@ -22,14 +23,22 @@ export const loadToken = async () => {
 
 export async function api(method, path, body) {
   let res;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
   try {
     res = await fetch(API_URL + path, {
       method,
       headers: { 'Content-Type': 'application/json', ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       body: body ? JSON.stringify(body) : undefined,
+      signal: controller.signal,
     });
-  } catch {
+  } catch (error) {
+    if (error.name === 'AbortError') {
+      throw new Error(`Tempo limite ao conectar ao servidor (${API_URL}). Verifique se o backend está rodando e se o celular está na mesma rede Wi-Fi.`);
+    }
     throw new Error(`Não foi possível conectar ao servidor (${API_URL}). Verifique se o backend está rodando e se o celular está na mesma rede.`);
+  } finally {
+    clearTimeout(timeout);
   }
   if (res.status === 204) return null;
   const data = await res.json().catch(() => ({}));

@@ -20,7 +20,7 @@ export default function AuthScreen({ onLogged }) {
       await setToken(r.token);
       onLogged(r.user);
     } catch (e) { setError(e.message); }
-    setBusy(false);
+    finally { setBusy(false); }
   }
 
   return (
