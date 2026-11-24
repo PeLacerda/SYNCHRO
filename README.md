@@ -68,8 +68,3 @@ mobile/   App.js  src/{api,theme,ui}.js  src/{Auth,Spaces,Space}Screen.js  src/{
 
 ## API (resumo)
 `POST /api/auth/register|login` · `GET /api/auth/me` · `GET|POST /api/spaces` · `POST /api/spaces/join` · `GET|DELETE /api/spaces/:id` · `DELETE /api/spaces/:id/members/:userId` · `GET|POST /api/spaces/:id/{events|memories|discoveries}` · `PATCH|DELETE /api/{events|memories|discoveries}/:id` · `POST /api/discoveries/:id/to-memory` · `GET /api/spaces/:id/universe`
-
-## Limitações conhecidas
-- Sem upload de fotos nem notificações push (fora do escopo desta versão).
-- Backend com SQLite local, pensado para demonstração; para produção, trocar o `JWT_SECRET` (variável de ambiente) e hospedar o servidor.
-- O app foi validado por empacotamento (`expo export`) e o backend por testes automatizados; teste no seu aparelho antes da apresentação.
